@@ -1,10 +1,10 @@
---Top 10 hoghest products by revenue
+--1. Top 10 hoghest products by revenue
 select top 10 product_id, sum(sale_price) as Sales
 from df_orders
 group by product_id
 order by Sales  desc
 
---Top 5 selling product in each region
+--2. Top 5 selling product in each region
 with cte as (
 select region, product_id, sum(sale_price) as Sales
 from df_orders
@@ -17,7 +17,7 @@ from cte) A
 where rn<=5
 
 
---Find the month over month growth comaprision for 2023 and 2024 sales
+--3. Find the month over month growth comaprision for 2023 and 2024 sales
 
 with cte as(
 	select year(order_date) as order_year, month(order_date) as order_month, sum(sale_price) as Sales
@@ -33,7 +33,7 @@ from cte
 group by order_month
 order by order_month
 
---For each category, which month had the highest sales
+--4. For each category, which month had the highest sales
 
 with cte as(
 	select category, format(order_date, 'yyyyMM') as order_year_month, sum(sale_price) as Sales
@@ -48,7 +48,7 @@ from cte) a
 where rn =1
 
 
---which sub category had the highest growth in sales in  2023 compare to 2022
+--5. which sub category had the highest growth in sales in  2023 compare to 2022
 
 with cte as(
 	select sub_category, year(order_date) as order_year, sum(sale_price) as Sales
